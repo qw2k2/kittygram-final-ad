@@ -33,7 +33,6 @@ Kittygram is a full-stack web application for sharing cats. Users can create acc
 - PostgreSQL 13
 - Nginx
 - GitHub Actions
-- Docker Hub
 
 ## Architecture
 
@@ -134,18 +133,15 @@ npm ci
 npm test -- --watchAll=false
 ```
 
-## CI/CD
+## Continuous integration
 
-The GitHub Actions workflow in `.github/workflows/kittygram_workflow.yml` is configured to run on pushes to `main`. It:
+The GitHub Actions workflow in `.github/workflows/kittygram_workflow.yml` runs on pushes and pull requests targeting `main`. It:
 
 1. Installs backend dependencies and runs Django tests.
 2. Installs frontend dependencies and runs the React test suite.
-3. Builds and pushes backend, frontend, and Nginx images to Docker Hub.
-4. Deploys the Compose configuration to a remote server over SSH.
-5. Sends a Telegram notification with the deployment result.
 
-Deployment requires repository Actions secrets for Docker Hub credentials, SSH access, database configuration, Django settings, allowed hosts, CSRF trusted origins, and Telegram notifications. Never commit the real `.env` file or secret values.
+The workflow uses a temporary CI-only Django secret and does not require deployment credentials. Automated deployment is not currently enabled by this workflow.
 
 ## Project status
 
-This is an educational full-stack project demonstrating a React frontend, Django REST API, containerized services, and a CI/CD deployment pipeline. The repository includes starter tests; test coverage and production hardening can be expanded further.
+This is an educational full-stack project demonstrating a React frontend, Django REST API, containerized services, and automated testing. The repository includes starter tests; test coverage and production hardening can be expanded further.
