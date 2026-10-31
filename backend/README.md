@@ -1,51 +1,52 @@
-### Как запустить проект:
+# Kittygram backend
 
-Клонировать репозиторий и перейти в него в командной строке:
+This directory contains the Django REST API used by the Kittygram application.
 
-```
-git clone https://github.com/yandex-praktikum/kittygram_backend.git
-```
+The backend provides:
+- Token-based user authentication through Djoser and Django REST Framework
+- CRUD endpoints for cat profiles
+- Achievement management
+- Cat photo upload and image URL serialization
+- PostgreSQL persistence in the Docker Compose setup
 
-```
-cd kittygram_backend
-```
+For the full architecture, Docker Compose instructions, CI/CD workflow, and environment configuration, see the [main project README](../README.md).
 
-Cоздать и активировать виртуальное окружение:
+## Run the backend independently
 
-```
-python3 -m venv env
-```
+From this directory, create and activate a virtual environment, then install dependencies:
 
-* Если у вас Linux/macOS
-
-    ```
-    source env/bin/activate
-    ```
-
-* Если у вас windows
-
-    ```
-    source env/scripts/activate
-    ```
-
-```
-python3 -m pip install --upgrade pip
+```bash
+python -m venv .venv
 ```
 
-Установить зависимости из файла requirements.txt:
-
+Linux / macOS:
+```bash
+source .venv/bin/activate
 ```
+
+Windows PowerShell:
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Install dependencies and provide a development secret key:
+
+```bash
 pip install -r requirements.txt
 ```
 
-Выполнить миграции:
+Linux / macOS:
+```bash
+export SECRET_KEY="local-development-secret"
+python manage.py migrate
+python manage.py runserver
+```
 
-```
-python3 manage.py migrate
+Windows PowerShell:
+```powershell
+$env:SECRET_KEY = "local-development-secret"
+python manage.py migrate
+python manage.py runserver
 ```
 
-Запустить проект:
-
-```
-python3 manage.py runserver
-```
+The standalone backend uses SQLite when no PostgreSQL environment variables are configured. The Docker Compose setup uses PostgreSQL.
